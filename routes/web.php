@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Support\Arr;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
 Route::get('/', function () {
     return view('home', ['title' => 'Homepage']);
 });
@@ -23,45 +25,12 @@ Route::get('/about', function () {
 });
 
 Route::get('/posts', function () {
-    return view('posts', ['title' => 'Blog', 'posts' => [
-        [
-            'id' => 1,
-            'slug' => 'judul-artikel-1',
-            'title' => 'Judul Artikel 1',
-            'author' => 'Yopan Ramadhan',
-            'body' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic officia ut illum odio repellat eveniet quibusdam porro quae, praesentium nobis voluptatem quam, error est tenetur possimus culpa, id quaerat eius?'
-        ],
-        [
-            'id' => 2,
-            'slug' => 'judul-artikel-2',
-            'title' => 'Judul Artikel 2',
-            'author' => 'Yopan Ramadhan',
-            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam neque nobis unde commodi sit veritatis amet voluptate quod est vero facere tempore, ad fuga dolore porro facilis. Cupiditate, ullam! Ipsam, esse dolore? Perspiciatis vero quos animi aperiam expedita voluptates distinctio omnis modi laudantium molestias fugiat, saepe aliquid accusantium minima iste assumenda quia sit nulla unde aut harum quisquam accusamus dolorum est! Quibusdam ea labore quia corporis, hic excepturi nemo optio.'
-        ]
-    ]]);
+    return view('posts', ['title' => 'Blog', 'posts' => Post::all()]);
 });
 
-Route::get('/posts/{slug}', function ($slug) {
-    $posts = [
-        [
-            'id' => 1,
-            'slug' => 'judul-artikel-1',
-            'title' => 'Judul Artikel 1',
-            'author' => 'Yopan Ramadhan',
-            'body' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Hic officia ut illum odio repellat eveniet quibusdam porro quae, praesentium nobis voluptatem quam, error est tenetur possimus culpa, id quaerat eius?'
-        ],
-        [
-            'id' => 2,
-            'slug' => 'judul-artikel-2',
-            'title' => 'Judul Artikel 2',
-            'author' => 'Yopan Ramadhan',
-            'body' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam neque nobis unde commodi sit veritatis amet voluptate quod est vero facere tempore, ad fuga dolore porro facilis. Cupiditate, ullam! Ipsam, esse dolore? Perspiciatis vero quos animi aperiam expedita voluptates distinctio omnis modi laudantium molestias fugiat, saepe aliquid accusantium minima iste assumenda quia sit nulla unde aut harum quisquam accusamus dolorum est! Quibusdam ea labore quia corporis, hic excepturi nemo optio.'
-        ]
-    ];
+Route::get('/posts/{post:slug}', function (Post $post) {
 
-    $post = Arr::first($posts, function ($post) use ($slug) {
-        return $post['slug'] == $slug;
-    });
+    // $post = Post::where('slug', $slug)->firstOrFail();
 
     return view('post', ['title' => 'Single Post', 'post' => $post]);
 });
