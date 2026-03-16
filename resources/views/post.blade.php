@@ -22,13 +22,13 @@
                                     alt="{{ $post->author->name }}">
                                 <div>
                                     {{-- Nama Penulis --}}
-                                    <a href="/authors/{{ $post->author->username }}" rel="author"
+                                    <a href="/posts?author={{ $post->author->username }}" rel="author"
                                         class="text-xl font-bold text-gray-900 dark:text-white hover:underline">
                                         {{ $post->author->name }}
                                     </a>
                                     {{-- Kategori Artikel --}}
                                     <p class="text-base text-gray-500 dark:text-gray-400">
-                                        in <a href="/categories/{{ $post->category->slug }}"
+                                        in <a href="/posts?category={{ $post->category->slug }}"
                                             class="hover:underline text-blue-600">{{ $post->category->name }}</a>
                                     </p>
                                     {{-- Waktu Pembuatan --}}
