@@ -27,18 +27,27 @@ Route::get('/about', function () {
 });
 
 Route::get('/posts', function () {
-    return view('posts', ['title' => 'Blog', 'posts' => Post::all()]);
+
+    $posts = Post::with(['author', 'category'])->latest()->get();
+
+    return view('posts', ['title' => 'Blog', 'posts' => Post::latest()->get()]);
 });
 
 Route::get('/posts/{post:slug}', function (Post $post) {
     return view('post', ['title' => 'Single Post', 'post' => $post]);
 });
 
-Route::get('/authors/{user:username}', function (User $user) {
+Route::get('/authors/{user:name}', function (User $user) {
+
+    // $posts = $user->posts->load('category', 'author');
+
     return view('posts', ['title' => 'Articles By ' . $user->name, 'posts' => $user->posts]);
 });
 
 Route::get('/categories/{category:slug}', function (Category $category) {
+
+    // $posts = $category->posts->load('category', 'author');
+
     return view('posts', ['title' => 'Articles in: ' . $category->name, 'posts' => $category->posts]);
 });
 
